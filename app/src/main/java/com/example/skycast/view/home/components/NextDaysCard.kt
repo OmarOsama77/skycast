@@ -1,0 +1,81 @@
+package com.example.skycast.view.home.components
+
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.shadow
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import com.example.skycast.R
+
+@Composable
+fun NextDaysCard(modifier: Modifier = Modifier) {
+    Box(
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(70.dp)
+            .shadow(elevation = 3.dp, shape = RoundedCornerShape(12.dp))
+            .background(Color.White)
+    ) {
+        Row(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(10.dp),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.SpaceBetween
+        ) {
+
+            Row(
+                modifier = Modifier.fillMaxSize(),
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.SpaceBetween
+            ) {
+                Row {
+                    Image(
+                        modifier = Modifier.size(30.dp),
+                        painter = painterResource(R.drawable.sun),
+                        contentDescription = null
+                    )
+                    Spacer(Modifier.width(12.dp))
+                    Column {
+                        Text("Monday")
+                        Text("November 15")
+                    }
+                }
+
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                ) {
+                    Image(
+                        modifier = Modifier.size(17.dp),
+                        painter = painterResource(R.drawable.windyspeed),
+                        contentDescription = null
+                    )
+                    Text("12")
+                    Spacer(Modifier.width(12.dp))
+                    Text("26", fontSize = 22.sp, fontWeight = FontWeight.Bold)
+                }
+
+            }
+
+        }
+    }
+}
