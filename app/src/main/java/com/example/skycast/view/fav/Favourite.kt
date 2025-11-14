@@ -16,6 +16,7 @@ import com.example.skycast.view.fav.components.FavHeader
 @Composable
 fun Favourite(navController: NavController) {
     Column(
+
         modifier = Modifier.padding(top = 32.dp, start = 15.dp, end = 15.dp)
     ) {
         LazyColumn (

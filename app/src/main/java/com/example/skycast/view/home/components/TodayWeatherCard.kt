@@ -53,7 +53,7 @@ fun TodayWeather(navController: NavController) {
             ) {
 
                 Text(
-                    "28",
+                    "28°",
                     fontSize = 50.sp,
                     fontWeight = FontWeight.Bold,
                     color = Color.Black

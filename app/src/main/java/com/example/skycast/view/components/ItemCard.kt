@@ -76,7 +76,7 @@ fun ItemCard(navController: NavController) {
                     )
                     Text("12")
                     Spacer(Modifier.width(12.dp))
-                    Text("26", fontSize = 22.sp, fontWeight = FontWeight.Bold)
+                    Text("26°", fontSize = 22.sp, fontWeight = FontWeight.Bold)
                 }
 
             }
