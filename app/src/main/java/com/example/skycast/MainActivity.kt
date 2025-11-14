@@ -4,10 +4,8 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.navigation.compose.NavHost
-import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.example.skycast.view.home.HomeScreen
+import com.example.skycast.view.navigation.AppNavGraph
 
 
 class MainActivity : ComponentActivity() {
@@ -16,11 +14,7 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             val navController = rememberNavController()
-            NavHost(navController = navController, startDestination = "HomeScreen", builder = {
-                composable("HomeScreen") {
-                    HomeScreen()
-                }
-            })
+            AppNavGraph(navController)
         }
     }
 }
