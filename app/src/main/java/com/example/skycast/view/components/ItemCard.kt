@@ -29,7 +29,7 @@ import androidx.navigation.NavController
 import com.example.skycast.R
 
 @Composable
-fun ItemCard(navController: NavController) {
+fun ItemCard(navController: NavController,temp:Double,windSpeed:Double) {
     Box(
         modifier = Modifier
             .fillMaxWidth()
@@ -74,9 +74,9 @@ fun ItemCard(navController: NavController) {
                         painter = painterResource(R.drawable.windyspeed),
                         contentDescription = null
                     )
-                    Text("12")
+                    Text("${windSpeed}")
                     Spacer(Modifier.width(12.dp))
-                    Text("26°", fontSize = 22.sp, fontWeight = FontWeight.Bold)
+                    Text("${temp}°", fontSize = 22.sp, fontWeight = FontWeight.Bold)
                 }
 
             }

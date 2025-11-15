@@ -12,9 +12,10 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.skycast.view.components.ItemCard
 import com.example.skycast.view.fav.components.FavHeader
+import com.example.skycast.viewmodel.WeatherViewModel
 
 @Composable
-fun Favourite(navController: NavController) {
+fun Favourite(navController: NavController,viewModel: WeatherViewModel) {
     Column(
 
         modifier = Modifier.padding(top = 32.dp, start = 15.dp, end = 15.dp)
@@ -29,7 +30,7 @@ fun Favourite(navController: NavController) {
             }
 
             items(12) {
-                ItemCard(navController)
+                ItemCard(navController,2.2,2.2)
             }
         }
     }

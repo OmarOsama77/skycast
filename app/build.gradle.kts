@@ -57,4 +57,14 @@ dependencies {
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
     implementation("androidx.navigation:navigation-compose:2.8.3")
+    implementation("com.squareup.retrofit2:retrofit:2.9.0")
+    implementation("com.squareup.retrofit2:converter-scalars:2.9.0")
+    implementation("com.squareup.moshi:moshi:1.15.2")
+    implementation("com.squareup.moshi:moshi-kotlin:1.15.2")
+    implementation("com.squareup.retrofit2:converter-moshi:3.0.0")
+    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.9.4")
+    implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.9.4")
+    implementation("androidx.compose.runtime:runtime-livedata:1.6.8")
+
+
 }

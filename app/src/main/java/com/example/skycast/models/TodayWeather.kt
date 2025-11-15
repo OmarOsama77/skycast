@@ -1,10 +1,11 @@
 package com.example.skycast.models
 
-data class Weather(
-    val temperature_2m : Double,
+data class TodayWeather(
+    val temp : Double,
     val rain:Double,
     val weatherCode:Double,
-    val snowfall : Double,
+    val snowFall : Double,
     val windSpeed:Double,
-    val humidity:Double
+    val humidity:Double,
+
 )

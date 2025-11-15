@@ -18,6 +18,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
@@ -28,16 +29,18 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.skycast.R
+import com.example.skycast.viewmodel.WeatherViewModel
 
 @Composable
-fun TodayWeather(navController: NavController) {
+fun TodayWeather(navController: NavController, viewModel: WeatherViewModel) {
+    val weather = viewModel.weather.observeAsState()
     Box(
         modifier = Modifier
             .fillMaxWidth()
             .height(120.dp)
             .shadow(elevation = 3.dp, shape = RoundedCornerShape(12.dp))
             .background(Color.White)
-            .clickable{
+            .clickable {
                 navController.navigate("DetailsScreen")
             }
     ) {
@@ -52,12 +55,14 @@ fun TodayWeather(navController: NavController) {
                 verticalArrangement = Arrangement.SpaceBetween
             ) {
 
+
                 Text(
-                    "28°",
+                    "${weather.value?.todayWeather?.temp}°",
                     fontSize = 50.sp,
                     fontWeight = FontWeight.Bold,
                     color = Color.Black
                 )
+
                 Row(
                     verticalAlignment = Alignment.CenterVertically
                 ) {
@@ -67,7 +72,7 @@ fun TodayWeather(navController: NavController) {
                         contentDescription = null,
                     )
                     Spacer(Modifier.width(5.dp))
-                    Text("15 km/h")
+                    Text("${weather.value?.todayWeather?.windSpeed} km/h")
 
                     Spacer(Modifier.width(12.dp))
                     Image(
@@ -76,7 +81,7 @@ fun TodayWeather(navController: NavController) {
                         contentDescription = null,
                     )
                     Spacer(Modifier.width(5.dp))
-                    Text("45%")
+                    Text("${weather.value?.todayWeather?.humidity}%")
                 }
             }
 

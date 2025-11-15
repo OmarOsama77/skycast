@@ -7,18 +7,21 @@ import androidx.navigation.compose.composable
 import com.example.skycast.view.details.DetailsScreen
 import com.example.skycast.view.fav.Favourite
 import com.example.skycast.view.home.HomeScreen
+import com.example.skycast.viewmodel.WeatherViewModel
 
 @Composable
-fun AppNavGraph(navController: NavHostController) {
+fun AppNavGraph(navController: NavHostController,viewModel: WeatherViewModel) {
+
+
     NavHost(navController = navController, startDestination = "HomeScreen", builder = {
         composable ("HomeScreen"){
-            HomeScreen(navController)
+            HomeScreen(navController,viewModel)
         }
         composable ("DetailsScreen"){
-            DetailsScreen(navController)
+            DetailsScreen(navController,viewModel)
         }
         composable ("FavScreen"){
-            Favourite(navController)
+            Favourite(navController,viewModel)
         }
     })
 }
