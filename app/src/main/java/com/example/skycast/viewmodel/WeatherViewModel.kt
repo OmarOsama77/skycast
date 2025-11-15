@@ -1,5 +1,6 @@
 package com.example.skycast.viewmodel
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -15,11 +16,13 @@ class WeatherViewModel(private val repo: WeatherRepository) : ViewModel() {
 
 
     init {
+
         getData()
+
     }
     private fun getData(){
         viewModelScope.launch {
-           _daily.value =  repo.getTodayWeatherNetwork()
+           _daily.value = repo.getData()
         }
     }
 

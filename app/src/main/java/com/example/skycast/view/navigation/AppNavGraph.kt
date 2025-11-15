@@ -5,6 +5,7 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import com.example.skycast.data.network.ConnectivityObserver
 import com.example.skycast.models.DailyWeather
 import com.example.skycast.view.details.DetailsScreen
 import com.example.skycast.view.fav.Favourite
