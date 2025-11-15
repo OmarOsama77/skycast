@@ -26,11 +26,12 @@ class WeatherRepositoryImp(
     override suspend fun getData(): List<DailyWeather>? {
         try {
             val networkStatus = connectivityObserver.observer().first()
+            Log.d("Erorroror",networkStatus.toString())
 
             if (networkStatus.toString() == "Available") {
-
+                Log.d("AVdasdsadsa","d")
                 val dailyWeather: List<DailyWeather> = getDataFromApi()!!
-                //cashing
+                //caching
                 insertDataIntoDB(dailyWeather)
                 return dailyWeather
             } else {

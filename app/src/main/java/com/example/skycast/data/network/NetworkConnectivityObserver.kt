@@ -15,45 +15,34 @@ class NetworkConnectivityObserver(private val context: Context) : ConnectivityOb
     private val connectivityManager =
         context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
 
-    override fun observer(): Flow<ConnectivityObserver.Status> {
-        return callbackFlow {
-            trySend(ConnectivityObserver.Status.Unavailable)
-            val callback = object : ConnectivityManager.NetworkCallback() {
-                override fun onAvailable(network: Network) {
-                    super.onAvailable(network)
-                    launch {
-                        send(ConnectivityObserver.Status.Available)
-                    }
-                }
+    override fun observer(): Flow<ConnectivityObserver.Status> = callbackFlow {
 
-                override fun onLosing(network: Network, maxMsToLive: Int) {
-                    super.onLosing(network, maxMsToLive)
-                    launch {
-                        send(ConnectivityObserver.Status.Losing)
-                    }
-                }
+        val activeNetwork = connectivityManager.activeNetwork
+        val networkCapabilities = connectivityManager.getNetworkCapabilities(activeNetwork)
+        val initialStatus = if (networkCapabilities != null) {
+            ConnectivityObserver.Status.Available
+        } else {
+            ConnectivityObserver.Status.Unavailable
+        }
+        trySend(initialStatus)
 
-                override fun onLost(network: Network) {
-                    super.onLost(network)
-                    launch {
-                        send(ConnectivityObserver.Status.Lost)
-                    }
-                }
-
-                override fun onUnavailable() {
-                    super.onUnavailable()
-                    launch {
-                        send(ConnectivityObserver.Status.Unavailable)
-                    }
-
-                }
-
+        val callback = object : ConnectivityManager.NetworkCallback() {
+            override fun onAvailable(network: Network) {
+                trySend(ConnectivityObserver.Status.Available)
             }
-            connectivityManager.registerDefaultNetworkCallback(callback)
-            awaitClose {
-                connectivityManager.unregisterNetworkCallback(callback)
-            }
-        }.distinctUntilChanged()
-    }
 
+            override fun onLosing(network: Network, maxMsToLive: Int) {
+                trySend(ConnectivityObserver.Status.Losing)
+            }
+
+            override fun onLost(network: Network) {
+                trySend(ConnectivityObserver.Status.Lost)
+            }
+        }
+
+        connectivityManager.registerDefaultNetworkCallback(callback)
+        awaitClose {
+            connectivityManager.unregisterNetworkCallback(callback)
+        }
+    }.distinctUntilChanged()
 }
