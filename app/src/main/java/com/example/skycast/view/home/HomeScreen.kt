@@ -49,9 +49,7 @@ fun HomeScreen(navController: NavController, viewModel: WeatherViewModel) {
                 items(weather.value?.size ?: 0) { indx ->
                     ItemCard(
                         navController,
-                        weather.value!![indx].temp,
-                        weather.value!![indx].windSpeed,
-                        weather.value!![indx].time,
+                        weather.value!![indx]
                     )
                 }
             }

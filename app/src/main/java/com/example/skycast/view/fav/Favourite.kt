@@ -10,6 +10,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import com.example.skycast.models.DailyWeather
 import com.example.skycast.view.components.ItemCard
 import com.example.skycast.view.fav.components.FavHeader
 import com.example.skycast.viewmodel.WeatherViewModel
@@ -30,7 +31,15 @@ fun Favourite(navController: NavController,viewModel: WeatherViewModel) {
             }
 
             items(12) {
-                ItemCard(navController,2.2,2.2,"omar")
+                ItemCard(navController, DailyWeather(
+                    "dsa",
+                    1.0,
+                    2.0,
+                    3.0,
+                    4.0,
+                    32.2,
+                    2.21,
+                ))
             }
         }
     }

@@ -8,18 +8,23 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.example.skycast.R
+import com.example.skycast.models.DailyWeather
 
 @Composable
-fun DetailsBody(modifier: Modifier = Modifier) {
-    DetailsItem(painterResource(R.drawable.temperature),"Temperature","26°")
+fun DetailsBody(dailyWeather: DailyWeather) {
+    DetailsItem(painterResource(R.drawable.calendar),"Date","${dailyWeather.time}")
     Spacer(Modifier.height(20.dp))
-    DetailsItem(painterResource(R.drawable.windyspeed),"wind speed","200 km/h")
+    DetailsItem(painterResource(R.drawable.temperature),"Temperature","${dailyWeather.temp}°")
     Spacer(Modifier.height(20.dp))
-    DetailsItem(painterResource(R.drawable.humidity),"Humidity","50%")
+    DetailsItem(painterResource(R.drawable.windyspeed),"wind speed","${dailyWeather.windSpeed} km/h")
     Spacer(Modifier.height(20.dp))
-    DetailsItem(painterResource(R.drawable.snow),"Snow","Snowy")
+    DetailsItem(painterResource(R.drawable.snow),"Snow","${dailyWeather.snow}")
     Spacer(Modifier.height(20.dp))
-    DetailsItem(painterResource(R.drawable.sun),"Weather status","Sunny")
+    DetailsItem(painterResource(R.drawable.sun),"Weather status","${dailyWeather.weatherCode}")
     Spacer(Modifier.height(20.dp))
-    DetailsItem(painterResource(R.drawable.rainy),"Rain","Raining")
+    DetailsItem(painterResource(R.drawable.rainy),"Rain","${dailyWeather.rain}")
+    Spacer(Modifier.height(20.dp))
+    DetailsItem(painterResource(R.drawable.temperature),"Max temp","${dailyWeather.tempMax}")
+    Spacer(Modifier.height(20.dp))
+    DetailsItem(painterResource(R.drawable.temperature),"Min temp","${dailyWeather.tempMin}")
 }

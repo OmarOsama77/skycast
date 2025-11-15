@@ -1,5 +1,6 @@
 package com.example.skycast.view.components
 
+import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -27,18 +28,25 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.skycast.R
+import com.example.skycast.models.DailyWeather
+import com.example.skycast.view.details.DetailsScreen
 
 @Composable
-fun ItemCard(navController: NavController,temp:Double,windSpeed:Double,date: String) {
+fun ItemCard(navController: NavController,dailyWeather: DailyWeather) {
     Box(
         modifier = Modifier
             .fillMaxWidth()
             .height(70.dp)
             .shadow(elevation = 3.dp, shape = RoundedCornerShape(12.dp))
             .background(Color.White)
-            .clickable{
+            .clickable {
                 navController.navigate("DetailsScreen")
+
+                navController.currentBackStackEntry
+                    ?.savedStateHandle
+                    ?.set("daily", dailyWeather)
             }
+
     ) {
         Row(
             modifier = Modifier
@@ -62,7 +70,7 @@ fun ItemCard(navController: NavController,temp:Double,windSpeed:Double,date: Str
                     Spacer(Modifier.width(12.dp))
                     Column {
                         Text("Monday")
-                        Text(date)
+                        Text(dailyWeather.time)
                     }
                 }
 
@@ -74,9 +82,9 @@ fun ItemCard(navController: NavController,temp:Double,windSpeed:Double,date: Str
                         painter = painterResource(R.drawable.windyspeed),
                         contentDescription = null
                     )
-                    Text("${windSpeed}")
+                    Text("${dailyWeather.windSpeed}")
                     Spacer(Modifier.width(12.dp))
-                    Text("${temp}°", fontSize = 22.sp, fontWeight = FontWeight.Bold)
+                    Text("${dailyWeather.temp}°", fontSize = 22.sp, fontWeight = FontWeight.Bold)
                 }
 
             }

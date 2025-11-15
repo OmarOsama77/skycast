@@ -1,5 +1,6 @@
 package com.example.skycast.view.details
 
+import android.util.Log
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -22,13 +23,15 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import com.example.skycast.models.DailyWeather
 import com.example.skycast.view.details.components.DetailsBody
 import com.example.skycast.view.details.components.DetailsHeader
 import com.example.skycast.viewmodel.WeatherViewModel
 
 @Composable
-fun DetailsScreen(navController: NavController) {
+fun DetailsScreen(navController: NavController,dailyWeather: DailyWeather) {
     val scrollState = rememberScrollState()
+
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -49,6 +52,6 @@ fun DetailsScreen(navController: NavController) {
             }
         }
         Spacer(Modifier.height(20.dp))
-        DetailsBody()
+        DetailsBody(dailyWeather)
     }
 }
