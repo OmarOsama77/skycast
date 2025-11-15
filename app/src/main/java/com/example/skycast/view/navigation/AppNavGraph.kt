@@ -18,7 +18,7 @@ fun AppNavGraph(navController: NavHostController,viewModel: WeatherViewModel) {
             HomeScreen(navController,viewModel)
         }
         composable ("DetailsScreen"){
-            DetailsScreen(navController,viewModel)
+            DetailsScreen(navController)
         }
         composable ("FavScreen"){
             Favourite(navController,viewModel)

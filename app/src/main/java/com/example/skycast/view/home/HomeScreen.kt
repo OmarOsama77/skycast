@@ -24,7 +24,7 @@ import com.example.skycast.viewmodel.WeatherViewModel
 
 @Composable
 fun HomeScreen(navController: NavController, viewModel: WeatherViewModel) {
-    val weather = viewModel.weather.observeAsState()
+    val weather = viewModel.daily.observeAsState()
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -39,18 +39,19 @@ fun HomeScreen(navController: NavController, viewModel: WeatherViewModel) {
                 verticalArrangement = Arrangement.spacedBy(10.dp),
                 contentPadding = PaddingValues(bottom = 16.dp)
             ) {
-                item { HomeHeader(navController) }
+                item { HomeHeader(navController, weather.value!![0].time) }
                 item { TodayWeather(navController, viewModel) }
 
                 item { Spacer(Modifier.height(6.dp)) }
                 item { Text("Next 7 days", fontSize = 22.sp, fontWeight = FontWeight.SemiBold) }
                 item { Spacer(Modifier.height(6.dp)) }
 
-                items(weather.value?.nextDays?.windSpeed!!.size) { indx ->
+                items(weather.value?.size ?: 0) { indx ->
                     ItemCard(
                         navController,
-                        weather.value?.nextDays!!.tempMax[indx],
-                        weather.value?.nextDays!!.windSpeed[indx]
+                        weather.value!![indx].temp,
+                        weather.value!![indx].windSpeed,
+                        weather.value!![indx].time,
                     )
                 }
             }

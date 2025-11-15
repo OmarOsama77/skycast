@@ -2,27 +2,14 @@ package com.example.skycast.data.repository
 
 import android.util.Log
 import com.example.skycast.data.remote.api.ApiService
+import com.example.skycast.models.DailyWeather
 import com.example.skycast.models.NextDays
-import com.example.skycast.models.TodayWeather
-import com.example.skycast.models.WeatherInfo
-import kotlin.Double
-import kotlin.collections.List
 
 
 class WeatherRepositoryImp(private val apiService: ApiService) : WeatherRepository {
-    override suspend fun getTodayWeatherNetwork(): WeatherInfo? {
+    override suspend fun getTodayWeatherNetwork(): List<DailyWeather>? {
         try {
             val res = apiService.getWeatherData()
-            res.current.windSpeed
-
-            val todayWeather = TodayWeather(
-                temp = res.current.temp,
-                rain = res.current.rain,
-                weatherCode = res.current.weatherCode,
-                snowFall = res.current.snowFall,
-                windSpeed = res.current.windSpeed,
-                humidity = res.current.humidity
-            )
 
             val nextDays = NextDays(
                 time = res.daily.time,
@@ -34,8 +21,19 @@ class WeatherRepositoryImp(private val apiService: ApiService) : WeatherReposito
                 tempMin = res.daily.tempMin
             )
 
-            val weatherInfo = WeatherInfo(todayWeather, nextDays)
-            return weatherInfo
+            val dailyWeather: MutableList<DailyWeather> = MutableList(nextDays.rain.size) { i ->
+                DailyWeather(
+                    time = nextDays.time[i],
+                    weatherCode = nextDays.weatherCode[i],
+                    snow = nextDays.snow[i],
+                    rain = nextDays.rain[i],
+                    tempMax = nextDays.tempMax[i],
+                    tempMin = nextDays.tempMin[i],
+                    windSpeed = nextDays.windSpeed[i],
+                )
+            }
+
+         return dailyWeather
         } catch (e: Exception) {
             Log.d("Error ", e.toString())
         }

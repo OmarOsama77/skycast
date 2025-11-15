@@ -1,7 +1,6 @@
 package com.example.skycast.data.remote.api
 
 import com.example.skycast.data.remote.dto.WeatherResponseDto
-import com.example.skycast.data.remote.dto.TodayWeatherDto
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import retrofit2.Retrofit
@@ -24,8 +23,7 @@ interface ApiService {
 
     suspend fun getWeatherData(
         @Query("latitude") latitude: Double = 30.0625,
-        @Query("longitude") longitude: Double = 30.0625,
-        @Query("current") current: String = "temperature_2m,rain,snowfall,relative_humidity_2m,weather_code,wind_speed_10m",
+        @Query("longitude") longitude: Double = 31.25,
         @Query("daily") daily : String = "weather_code,wind_speed_10m_max,rain_sum,snowfall_sum,temperature_2m_max,temperature_2m_min"
     ): WeatherResponseDto
 

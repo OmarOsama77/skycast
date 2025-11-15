@@ -27,7 +27,7 @@ import com.example.skycast.view.details.components.DetailsHeader
 import com.example.skycast.viewmodel.WeatherViewModel
 
 @Composable
-fun DetailsScreen(navController: NavController,viewModel: WeatherViewModel) {
+fun DetailsScreen(navController: NavController) {
     val scrollState = rememberScrollState()
     Column(
         modifier = Modifier

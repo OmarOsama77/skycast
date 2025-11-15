@@ -29,7 +29,7 @@ import androidx.navigation.NavController
 import com.example.skycast.R
 
 @Composable
-fun ItemCard(navController: NavController,temp:Double,windSpeed:Double) {
+fun ItemCard(navController: NavController,temp:Double,windSpeed:Double,date: String) {
     Box(
         modifier = Modifier
             .fillMaxWidth()
@@ -62,7 +62,7 @@ fun ItemCard(navController: NavController,temp:Double,windSpeed:Double) {
                     Spacer(Modifier.width(12.dp))
                     Column {
                         Text("Monday")
-                        Text("November 15")
+                        Text(date)
                     }
                 }
 

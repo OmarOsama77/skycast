@@ -33,7 +33,7 @@ import com.example.skycast.viewmodel.WeatherViewModel
 
 @Composable
 fun TodayWeather(navController: NavController, viewModel: WeatherViewModel) {
-    val weather = viewModel.weather.observeAsState()
+    val weather = viewModel.daily.observeAsState()
     Box(
         modifier = Modifier
             .fillMaxWidth()
@@ -57,7 +57,7 @@ fun TodayWeather(navController: NavController, viewModel: WeatherViewModel) {
 
 
                 Text(
-                    "${weather.value?.todayWeather?.temp}°",
+                    "${weather.value!![0].temp}°",
                     fontSize = 50.sp,
                     fontWeight = FontWeight.Bold,
                     color = Color.Black
@@ -72,7 +72,7 @@ fun TodayWeather(navController: NavController, viewModel: WeatherViewModel) {
                         contentDescription = null,
                     )
                     Spacer(Modifier.width(5.dp))
-                    Text("${weather.value?.todayWeather?.windSpeed} km/h")
+                    Text("${weather.value!![0].windSpeed} km/h")
 
                     Spacer(Modifier.width(12.dp))
                     Image(
@@ -81,7 +81,7 @@ fun TodayWeather(navController: NavController, viewModel: WeatherViewModel) {
                         contentDescription = null,
                     )
                     Spacer(Modifier.width(5.dp))
-                    Text("${weather.value?.todayWeather?.humidity}%")
+                    Text("${weather.value!![0].snow}%")
                 }
             }
 

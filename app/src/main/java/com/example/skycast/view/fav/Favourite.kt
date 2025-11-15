@@ -30,7 +30,7 @@ fun Favourite(navController: NavController,viewModel: WeatherViewModel) {
             }
 
             items(12) {
-                ItemCard(navController,2.2,2.2)
+                ItemCard(navController,2.2,2.2,"omar")
             }
         }
     }
