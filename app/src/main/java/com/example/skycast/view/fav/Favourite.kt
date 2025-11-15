@@ -32,7 +32,6 @@ fun Favourite(navController: NavController,viewModel: WeatherViewModel) {
 
             items(12) {
                 ItemCard(navController, DailyWeather(
-                    id ="omar",
                     "dsa",
                     1.0,
                     2.0,

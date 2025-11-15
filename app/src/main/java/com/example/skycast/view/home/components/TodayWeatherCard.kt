@@ -29,10 +29,11 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.skycast.R
+import com.example.skycast.models.DailyWeather
 import com.example.skycast.viewmodel.WeatherViewModel
 
 @Composable
-fun TodayWeather(navController: NavController, viewModel: WeatherViewModel) {
+fun TodayWeather(navController: NavController, viewModel: WeatherViewModel,dailyWeather: DailyWeather) {
     val weather = viewModel.daily.observeAsState()
     Box(
         modifier = Modifier
@@ -42,6 +43,10 @@ fun TodayWeather(navController: NavController, viewModel: WeatherViewModel) {
             .background(Color.White)
             .clickable {
                 navController.navigate("DetailsScreen")
+
+                navController.currentBackStackEntry
+                    ?.savedStateHandle
+                    ?.set("daily", dailyWeather)
             }
     ) {
         Row(

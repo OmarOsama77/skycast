@@ -1,5 +1,6 @@
 package com.example.skycast.view.home
 
+import android.util.Log
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -16,6 +17,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import com.example.skycast.models.DailyWeather
 import com.example.skycast.view.components.ItemCard
 import com.example.skycast.view.home.components.HomeHeader
 import com.example.skycast.view.home.components.TodayWeather
@@ -25,6 +27,7 @@ import com.example.skycast.viewmodel.WeatherViewModel
 @Composable
 fun HomeScreen(navController: NavController, viewModel: WeatherViewModel) {
     val weather = viewModel.daily.observeAsState()
+
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -40,7 +43,7 @@ fun HomeScreen(navController: NavController, viewModel: WeatherViewModel) {
                 contentPadding = PaddingValues(bottom = 16.dp)
             ) {
                 item { HomeHeader(navController, weather.value!![0].time) }
-                item { TodayWeather(navController, viewModel) }
+                item { TodayWeather(navController, viewModel,weather.value!![0]) }
 
                 item { Spacer(Modifier.height(6.dp)) }
                 item { Text("Next 7 days", fontSize = 22.sp, fontWeight = FontWeight.SemiBold) }

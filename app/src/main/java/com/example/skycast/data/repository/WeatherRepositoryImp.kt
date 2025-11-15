@@ -26,13 +26,15 @@ class WeatherRepositoryImp(
     override suspend fun getData(): List<DailyWeather>? {
         try {
             val networkStatus = connectivityObserver.observer().first()
-            Log.d("Erorroror",networkStatus.toString())
+
 
             if (networkStatus.toString() == "Available") {
-                Log.d("AVdasdsadsa","d")
+
                 val dailyWeather: List<DailyWeather> = getDataFromApi()!!
+
                 //caching
                 insertDataIntoDB(dailyWeather)
+
                 return dailyWeather
             } else {
 
@@ -42,7 +44,7 @@ class WeatherRepositoryImp(
                 return final
             }
         } catch (e: Exception) {
-            Log.d("Error", e.toString())
+            Log.d("Errodsadsar", e.toString())
         }
         return null;
     }
@@ -50,7 +52,6 @@ class WeatherRepositoryImp(
     override suspend fun getDataFromApi(): List<DailyWeather>? {
         try {
             val res = apiService.getWeatherData()
-
             val nextDays = NextDays(
                 time = res.daily.time,
                 weatherCode = res.daily.weatherCode,
@@ -63,7 +64,6 @@ class WeatherRepositoryImp(
 
             val dailyWeather: MutableList<DailyWeather> = MutableList(nextDays.rain.size) { i ->
                 DailyWeather(
-                    id = UUID.randomUUID().toString(),
                     time = nextDays.time[i],
                     weatherCode = nextDays.weatherCode[i],
                     snow = nextDays.snow[i],
@@ -76,8 +76,9 @@ class WeatherRepositoryImp(
 
             return dailyWeather
         } catch (e: Exception) {
-            return null
+            Log.d("EEEEE", e.toString())
         }
+        return null
     }
 
     override suspend fun insertDataIntoDB(data: List<DailyWeather>) {

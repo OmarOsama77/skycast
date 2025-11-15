@@ -6,7 +6,6 @@ import com.example.skycast.models.DailyWeather
 fun DailyWeatherToWeather(data: List<DailyWeather>): List<Weather> {
     val weatherData: MutableList<Weather> = MutableList(data.size) { indx ->
         Weather(
-            id = data[indx].id,
             time = data[indx].time,
             weatherCode = data[indx].weatherCode,
             windSpeed = data[indx].windSpeed,
@@ -22,7 +21,6 @@ fun DailyWeatherToWeather(data: List<DailyWeather>): List<Weather> {
 fun weatherToDailyWeather(data: List<Weather>): List<DailyWeather> {
     val dailyData: MutableList<DailyWeather> = MutableList(data.size) { indx ->
         DailyWeather(
-            id = data[indx].id,
             tempMax = data[indx].tempMax,
             weatherCode = data[indx].weatherCode,
             temp = data[indx].temp,

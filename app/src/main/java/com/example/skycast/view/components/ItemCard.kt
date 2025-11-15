@@ -1,6 +1,5 @@
 package com.example.skycast.view.components
 
-import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -29,7 +28,6 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.skycast.R
 import com.example.skycast.models.DailyWeather
-import com.example.skycast.view.details.DetailsScreen
 
 @Composable
 fun ItemCard(navController: NavController,dailyWeather: DailyWeather) {

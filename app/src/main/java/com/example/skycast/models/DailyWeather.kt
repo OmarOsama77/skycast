@@ -5,7 +5,6 @@ import kotlinx.parcelize.Parcelize
 import kotlin.math.round
 @Parcelize
 data class DailyWeather(
-    val id : String,
     val time: String,
     val weatherCode: Double,
     val windSpeed:Double,
