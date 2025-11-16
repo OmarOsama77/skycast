@@ -3,6 +3,13 @@ package com.example.skycast.models
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
 import kotlin.math.round
+import org.threeten.bp.format.TextStyle
+import org.threeten.bp.LocalDate
+import org.threeten.bp.format.DateTimeFormatter
+import java.util.Locale
+
+
+
 
 @Parcelize
 data class DailyWeather(
@@ -14,9 +21,23 @@ data class DailyWeather(
     val tempMax: Double,
     var fav: Boolean,
     val tempMin: Double,
-    val day: String,
+    val day: String=calcDate(time),
     val temp: Double = round(((tempMin + tempMax) / 2) * 10) / 10
 
 
-) : Parcelable
+) : Parcelable{
+  companion object{
+      fun calcDate(time: String): String {
+          return try {
+              val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd")
+              val date = LocalDate.parse(time, formatter)
+              date.dayOfWeek.getDisplayName(TextStyle.FULL, Locale.ENGLISH)  // ✅ ThreeTenABP TextStyle
+          } catch (e: Exception) {
+              ""  // fallback
+          }
+      }
+  }
+
+
+}
 

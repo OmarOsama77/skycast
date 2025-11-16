@@ -32,7 +32,7 @@ fun HomeHeader(navController: NavController,date : String) {
             Text("Cairo", fontSize = 22.sp, fontWeight = FontWeight.Bold)
             Spacer(Modifier.height(10.dp))
 
-                Text("Today, $date", fontSize = 15.sp)
+                Text("Date, $date", fontSize = 15.sp)
 
             }
 

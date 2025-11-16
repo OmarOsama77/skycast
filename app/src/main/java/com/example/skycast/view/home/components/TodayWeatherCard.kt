@@ -82,11 +82,11 @@ fun TodayWeather(navController: NavController, viewModel: WeatherViewModel,daily
                     Spacer(Modifier.width(12.dp))
                     Image(
                         modifier = Modifier.size(22.dp),
-                        painter = painterResource(R.drawable.humidity),
+                        painter = painterResource(R.drawable.snow),
                         contentDescription = null,
                     )
                     Spacer(Modifier.width(5.dp))
-                    Text("${weather.value!![0].snow}%")
+                    Text("${weather.value!![0].snow}")
                 }
             }
 

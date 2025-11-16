@@ -21,6 +21,9 @@ class WeatherRepositoryImp(
 ) :
     WeatherRepository {
 
+    companion object {
+        var dataComingFromApi = true
+    }
 
     override suspend fun getData(): List<DailyWeather>? {
         try {
@@ -29,13 +32,13 @@ class WeatherRepositoryImp(
             if (networkStatus.toString() == "Available") {
 
                 val dailyWeather: List<DailyWeather> = getDataFromApi()!!
-
+                dataComingFromApi = true
                 //caching
                 insertDataIntoDB(dailyWeather)
 
                 return dailyWeather
             } else {
-
+                dataComingFromApi = false
                 val data: List<Weather> = db.getData()
                 val final = weatherToDailyWeather(data)
 

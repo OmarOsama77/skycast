@@ -67,7 +67,7 @@ fun ItemCard(navController: NavController,dailyWeather: DailyWeather) {
                     )
                     Spacer(Modifier.width(12.dp))
                     Column {
-                        Text("Monday")
+                        Text(dailyWeather.day)
                         Text(dailyWeather.time)
                     }
                 }

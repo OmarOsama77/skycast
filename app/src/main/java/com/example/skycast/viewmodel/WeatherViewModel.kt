@@ -22,7 +22,7 @@ class WeatherViewModel(private val repo: WeatherRepository) : ViewModel() {
 
     }
 
-    private fun getData() {
+     fun getData() {
         viewModelScope.launch {
             _daily.value = repo.getData()
         }

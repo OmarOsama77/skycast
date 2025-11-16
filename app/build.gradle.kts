@@ -12,7 +12,7 @@ android {
 
     defaultConfig {
         applicationId = "com.example.skycast"
-        minSdk = 24
+        minSdk = 26
         targetSdk = 36
         versionCode = 1
         versionName = "1.0"
@@ -70,5 +70,6 @@ dependencies {
     implementation("androidx.room:room-runtime:2.8.3")
     kapt("androidx.room:room-compiler:2.8.3")
     implementation("androidx.room:room-ktx:2.8.3")
-
+    implementation("com.jakewharton.threetenabp:threetenabp:1.4.4")
+    implementation("com.google.accompanist:accompanist-swiperefresh:0.30.1")
 }
