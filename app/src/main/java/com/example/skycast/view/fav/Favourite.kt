@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
@@ -17,6 +18,7 @@ import com.example.skycast.viewmodel.WeatherViewModel
 
 @Composable
 fun Favourite(navController: NavController,viewModel: WeatherViewModel) {
+    val fav = viewModel.fav!!.collectAsState(emptyList())
     Column(
 
         modifier = Modifier.padding(top = 32.dp, start = 15.dp, end = 15.dp)
@@ -30,15 +32,16 @@ fun Favourite(navController: NavController,viewModel: WeatherViewModel) {
                FavHeader(navController)
             }
 
-            items(12) {
+            items(fav.value.size) {indx->
                 ItemCard(navController, DailyWeather(
-                    "dsa",
-                    1.0,
-                    2.0,
-                    3.0,
-                    4.0,
-                    32.2,
-                    2.21,
+                    fav.value[indx].time,
+                    fav.value[indx].weatherCode,
+                    fav.value[indx].windSpeed,
+                    fav.value[indx].rain,
+                    fav.value[indx].snow,
+                    fav.value[indx].tempMax,
+                    fav.value[indx].fav,
+                    fav.value[indx].tempMin
                 ))
             }
         }

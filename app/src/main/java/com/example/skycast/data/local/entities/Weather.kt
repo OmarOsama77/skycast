@@ -14,5 +14,6 @@ data class Weather(
     val snow: Double,
     val tempMax: Double,
     val tempMin: Double,
+    val fav : Boolean,
     val temp: Double = round(((tempMin + tempMax) / 2) * 10) / 10
 )

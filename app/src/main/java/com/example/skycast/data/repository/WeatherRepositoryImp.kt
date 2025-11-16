@@ -1,19 +1,18 @@
 package com.example.skycast.data.repository
 
 import android.util.Log
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
 import com.example.skycast.data.local.WeatherDataBaseDao
 import com.example.skycast.data.local.entities.Weather
 import com.example.skycast.data.network.ConnectivityObserver
-import com.example.skycast.data.network.NetworkConnectivityObserver
 import com.example.skycast.data.remote.api.ApiService
-import com.example.skycast.mappers.DailyWeatherToWeather
+import com.example.skycast.mappers.dailyToWeather
+import com.example.skycast.mappers.dailyWeatherToWeather
+import com.example.skycast.mappers.weatherFlowToDailyWeather
 import com.example.skycast.mappers.weatherToDailyWeather
 import com.example.skycast.models.DailyWeather
 import com.example.skycast.models.NextDays
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
-import java.util.UUID
 
 class WeatherRepositoryImp(
     private val apiService: ApiService,
@@ -26,7 +25,6 @@ class WeatherRepositoryImp(
     override suspend fun getData(): List<DailyWeather>? {
         try {
             val networkStatus = connectivityObserver.observer().first()
-
 
             if (networkStatus.toString() == "Available") {
 
@@ -70,6 +68,7 @@ class WeatherRepositoryImp(
                     rain = nextDays.rain[i],
                     tempMax = nextDays.tempMax[i],
                     tempMin = nextDays.tempMin[i],
+                    fav = db.getFavStatus(nextDays.time[i]),
                     windSpeed = nextDays.windSpeed[i],
                 )
             }
@@ -82,8 +81,19 @@ class WeatherRepositoryImp(
     }
 
     override suspend fun insertDataIntoDB(data: List<DailyWeather>) {
-        val weather = DailyWeatherToWeather(data)
+        val weather = dailyWeatherToWeather(data)
         db.insertData(weather)
+    }
+
+    override suspend fun updateFav(dailyWeather: DailyWeather) {
+        val weather = dailyToWeather(dailyWeather)
+        db.updateFav(weather)
+    }
+
+    override fun getFav(): Flow<List<DailyWeather>> {
+        val data = db.getFav()
+        val final: Flow<List<DailyWeather>> = weatherFlowToDailyWeather(data!!)
+        return final
     }
 
 

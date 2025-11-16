@@ -1,11 +1,9 @@
 package com.example.skycast.view.navigation
 
-import android.util.Log
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import com.example.skycast.data.network.ConnectivityObserver
 import com.example.skycast.models.DailyWeather
 import com.example.skycast.view.details.DetailsScreen
 import com.example.skycast.view.fav.Favourite
@@ -22,7 +20,7 @@ fun AppNavGraph(navController: NavHostController,viewModel: WeatherViewModel) {
         }
          composable ("DetailsScreen"){navBackStackEntry->
              val dailyWeather = navBackStackEntry.savedStateHandle.get<DailyWeather>("daily")!!
-             DetailsScreen(navController,dailyWeather)
+             DetailsScreen(navController,dailyWeather,viewModel)
          }
         composable ("FavScreen"){
             Favourite(navController,viewModel)

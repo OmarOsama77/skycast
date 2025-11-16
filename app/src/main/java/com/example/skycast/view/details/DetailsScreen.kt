@@ -1,6 +1,8 @@
 package com.example.skycast.view.details
 
+import android.content.Context
 import android.util.Log
+import android.widget.Toast
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -12,13 +14,18 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.FavoriteBorder
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -29,9 +36,10 @@ import com.example.skycast.view.details.components.DetailsHeader
 import com.example.skycast.viewmodel.WeatherViewModel
 
 @Composable
-fun DetailsScreen(navController: NavController,dailyWeather: DailyWeather) {
+fun DetailsScreen(navController: NavController,dailyWeather: DailyWeather,viewModel: WeatherViewModel) {
     val scrollState = rememberScrollState()
-
+    val favState = remember { mutableStateOf(dailyWeather.fav) }
+    val context = LocalContext.current
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -47,8 +55,24 @@ fun DetailsScreen(navController: NavController,dailyWeather: DailyWeather) {
             horizontalArrangement = Arrangement.SpaceBetween
         ){
             Text("Weather Details", fontSize = 22.sp, fontWeight = FontWeight.Bold)
-            IconButton({}) {
-                Icon(Icons.Default.FavoriteBorder, contentDescription = null)
+            IconButton({
+                dailyWeather.fav = !dailyWeather.fav
+                favState.value=!favState.value
+                viewModel.addFav(dailyWeather)
+
+                Toast.makeText(
+                    context,
+                    if (favState.value) "Added to favorites" else "Removed from favorites",
+                    Toast.LENGTH_SHORT
+                ).show()
+
+
+            }) {
+                if(favState.value){
+                    Icon(Icons.Default.Favorite, contentDescription = null)
+                }else{
+                    Icon(Icons.Default.FavoriteBorder, contentDescription = null)
+                }
             }
         }
         Spacer(Modifier.height(20.dp))
