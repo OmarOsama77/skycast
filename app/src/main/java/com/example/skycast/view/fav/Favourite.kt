@@ -11,7 +11,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import com.example.skycast.models.DailyWeather
+import com.example.skycast.models.Weather
 import com.example.skycast.view.components.ItemCard
 import com.example.skycast.view.fav.components.FavHeader
 import com.example.skycast.viewmodel.WeatherViewModel
@@ -33,7 +33,7 @@ fun Favourite(navController: NavController,viewModel: WeatherViewModel) {
             }
 
             items(fav.value.size) {indx->
-                ItemCard(navController, DailyWeather(
+                ItemCard(navController, Weather(
                     fav.value[indx].time,
                     fav.value[indx].weatherCode,
                     fav.value[indx].windSpeed,

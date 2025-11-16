@@ -29,11 +29,11 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.skycast.R
-import com.example.skycast.models.DailyWeather
+import com.example.skycast.models.Weather
 import com.example.skycast.viewmodel.WeatherViewModel
 
 @Composable
-fun TodayWeather(navController: NavController, viewModel: WeatherViewModel,dailyWeather: DailyWeather) {
+fun TodayWeather(navController: NavController, viewModel: WeatherViewModel,dailyWeather: Weather) {
     val weather = viewModel.daily.observeAsState()
     Box(
         modifier = Modifier

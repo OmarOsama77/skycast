@@ -1,7 +1,5 @@
 package com.example.skycast.view.details
 
-import android.content.Context
-import android.util.Log
 import android.widget.Toast
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -20,7 +18,6 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -30,13 +27,13 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
-import com.example.skycast.models.DailyWeather
+import com.example.skycast.models.Weather
 import com.example.skycast.view.details.components.DetailsBody
 import com.example.skycast.view.details.components.DetailsHeader
 import com.example.skycast.viewmodel.WeatherViewModel
 
 @Composable
-fun DetailsScreen(navController: NavController,dailyWeather: DailyWeather,viewModel: WeatherViewModel) {
+fun DetailsScreen(navController: NavController, dailyWeather: Weather, viewModel: WeatherViewModel) {
     val scrollState = rememberScrollState()
     val favState = remember { mutableStateOf(dailyWeather.fav) }
     val context = LocalContext.current
@@ -47,7 +44,7 @@ fun DetailsScreen(navController: NavController,dailyWeather: DailyWeather,viewMo
             .verticalScroll(scrollState)
     ) {
 
-       DetailsHeader(navController)
+       DetailsHeader(navController, weather = dailyWeather)
         Spacer(Modifier.height(20.dp))
         Row (
             verticalAlignment = Alignment.CenterVertically,
@@ -58,7 +55,7 @@ fun DetailsScreen(navController: NavController,dailyWeather: DailyWeather,viewMo
             IconButton({
                 dailyWeather.fav = !dailyWeather.fav
                 favState.value=!favState.value
-                viewModel.addFav(dailyWeather)
+                viewModel.updateFav(dailyWeather)
 
                 Toast.makeText(
                     context,

@@ -17,9 +17,10 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import com.example.skycast.models.Weather
 
 @Composable
-fun DetailsHeader(navController: NavController) {
+fun DetailsHeader(navController: NavController,weather: Weather) {
     Box(modifier = Modifier.clickable{
         navController.popBackStack()
     }){
@@ -38,6 +39,6 @@ fun DetailsHeader(navController: NavController) {
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Text("Cairo", fontSize = 30.sp, fontWeight = FontWeight.Bold)
-        Text("November 15", fontSize = 22.sp)
+        Text("${weather.day} ${weather.time}", fontSize = 22.sp)
     }
 }

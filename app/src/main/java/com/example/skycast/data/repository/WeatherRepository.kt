@@ -1,15 +1,14 @@
 package com.example.skycast.data.repository
 
 
-import com.example.skycast.data.local.entities.Weather
-import com.example.skycast.models.DailyWeather
+import com.example.skycast.models.Weather
 import kotlinx.coroutines.flow.Flow
 
 interface WeatherRepository {
-    suspend fun getData(): List<DailyWeather>?
-    suspend fun getDataFromApi(): List<DailyWeather>?
-    suspend fun insertDataIntoDB(data: List<DailyWeather>)
-    suspend fun updateFav(dailyWeather: DailyWeather)
-    fun getFav(): Flow<List<DailyWeather>>?
+    suspend fun getData(): List<Weather>?
+    suspend fun getDataFromApi(): List<Weather>?
+    suspend fun insertDataIntoDB(data: List<Weather>)
+    suspend fun updateFav(weather: Weather)
+    fun getFav(): Flow<List<Weather>>?
 
 }

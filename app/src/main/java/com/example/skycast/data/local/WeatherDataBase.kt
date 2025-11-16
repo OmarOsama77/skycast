@@ -4,9 +4,9 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import com.example.skycast.data.local.entities.Weather
+import com.example.skycast.data.local.entities.WeatherEntity
 
-@Database(entities = [Weather::class], version = 3 , exportSchema = false)
+@Database(entities = [WeatherEntity::class], version = 3 , exportSchema = false)
 abstract class WeatherDataBase : RoomDatabase(){
     abstract val weatherDataBaseDao : WeatherDataBaseDao
 

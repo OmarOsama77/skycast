@@ -27,10 +27,10 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.skycast.R
-import com.example.skycast.models.DailyWeather
+import com.example.skycast.models.Weather
 
 @Composable
-fun ItemCard(navController: NavController,dailyWeather: DailyWeather) {
+fun ItemCard(navController: NavController,dailyWeather: Weather) {
     Box(
         modifier = Modifier
             .fillMaxWidth()

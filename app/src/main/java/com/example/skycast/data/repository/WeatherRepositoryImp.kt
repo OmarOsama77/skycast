@@ -2,17 +2,14 @@ package com.example.skycast.data.repository
 
 import android.util.Log
 import com.example.skycast.data.local.WeatherDataBaseDao
-import com.example.skycast.data.local.entities.Weather
+import com.example.skycast.data.local.entities.WeatherEntity
 import com.example.skycast.data.network.ConnectivityObserver
 import com.example.skycast.data.remote.api.ApiService
-import com.example.skycast.mappers.dailyToWeather
-import com.example.skycast.mappers.dailyWeatherToWeather
-import com.example.skycast.mappers.weatherFlowToDailyWeather
-import com.example.skycast.mappers.weatherToDailyWeather
-import com.example.skycast.models.DailyWeather
 import com.example.skycast.models.NextDays
+import com.example.skycast.models.Weather
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.map
 
 class WeatherRepositoryImp(
     private val apiService: ApiService,
@@ -25,32 +22,58 @@ class WeatherRepositoryImp(
         var dataComingFromApi = true
     }
 
-    override suspend fun getData(): List<DailyWeather>? {
+    override suspend fun getData(): List<Weather>? {
         try {
             val networkStatus = connectivityObserver.observer().first()
 
             if (networkStatus.toString() == "Available") {
 
-                val dailyWeather: List<DailyWeather> = getDataFromApi()!!
+                val dailyWeather: List<Weather> = getDataFromApi()!!
                 dataComingFromApi = true
+
                 //caching
                 insertDataIntoDB(dailyWeather)
+                val data = db.getData()
+                val res: List<Weather> = data.map { entity ->
+                    Weather(
+                        time = entity.time,
+                        weatherCode = entity.weatherCode,
+                        windSpeed = entity.windSpeed,
+                        rain = entity.rain,
+                        snow = entity.snow,
+                        tempMax = entity.tempMax,
+                        tempMin = entity.tempMin,
+                        fav = entity.fav
+                    )
+                }
 
-                return dailyWeather
+
+                return res
             } else {
                 dataComingFromApi = false
-                val data: List<Weather> = db.getData()
-                val final = weatherToDailyWeather(data)
+                val data: List<WeatherEntity> = db.getData()
+                val final: List<Weather> = data.map { entity ->
+                    Weather(
+                        time = entity.time,
+                        weatherCode = entity.weatherCode,
+                        windSpeed = entity.windSpeed,
+                        rain = entity.rain,
+                        snow = entity.snow,
+                        tempMax = entity.tempMax,
+                        tempMin = entity.tempMin,
+                        fav = entity.fav
+                    )
+                }
 
                 return final
             }
         } catch (e: Exception) {
-            Log.d("Errodsadsar", e.toString())
+            Log.d("Errorr", e.toString())
         }
         return null;
     }
 
-    override suspend fun getDataFromApi(): List<DailyWeather>? {
+    override suspend fun getDataFromApi(): List<Weather>? {
         try {
             val res = apiService.getWeatherData()
             val nextDays = NextDays(
@@ -63,15 +86,14 @@ class WeatherRepositoryImp(
                 tempMin = res.daily.tempMin
             )
 
-            val dailyWeather: MutableList<DailyWeather> = MutableList(nextDays.rain.size) { i ->
-                DailyWeather(
+            val dailyWeather: MutableList<Weather> = MutableList(nextDays.rain.size) { i ->
+                Weather(
                     time = nextDays.time[i],
                     weatherCode = nextDays.weatherCode[i],
                     snow = nextDays.snow[i],
                     rain = nextDays.rain[i],
                     tempMax = nextDays.tempMax[i],
                     tempMin = nextDays.tempMin[i],
-                    fav = db.getFavStatus(nextDays.time[i]),
                     windSpeed = nextDays.windSpeed[i],
                 )
             }
@@ -83,21 +105,65 @@ class WeatherRepositoryImp(
         return null
     }
 
-    override suspend fun insertDataIntoDB(data: List<DailyWeather>) {
-        val weather = dailyWeatherToWeather(data)
-        db.insertData(weather)
+    override suspend fun insertDataIntoDB(data: List<Weather>) {
+         //we need to convert to weatherEntity to add to db
+
+         val weatherEntities : List<WeatherEntity> = data.map {daily->
+             WeatherEntity(
+                 time = daily.time,
+                 weatherCode = daily.weatherCode,
+                 windSpeed = daily.windSpeed,
+                 rain = daily.rain,
+                 snow = daily.snow,
+                 tempMax = daily.tempMax,
+                 tempMin = daily.tempMin,
+                 fav = false
+             )
+         }
+        db.insertData(weatherEntities)
+
     }
 
-    override suspend fun updateFav(dailyWeather: DailyWeather) {
-        val weather = dailyToWeather(dailyWeather)
-        db.updateFav(weather)
+    override suspend fun updateFav(weather: Weather) {
+        val updated : WeatherEntity = WeatherEntity(
+             time = weather.time,
+            fav = weather.fav,
+            rain = weather.rain,
+            weatherCode = weather.weatherCode,
+            temp = weather.temp,
+            snow = weather.snow,
+            tempMax = weather.tempMax,
+            tempMin = weather.tempMin,
+            windSpeed = weather.windSpeed
+        )
+        db.updateFav(updated)
     }
 
-    override fun getFav(): Flow<List<DailyWeather>> {
-        val data = db.getFav()
-        val final: Flow<List<DailyWeather>> = weatherFlowToDailyWeather(data!!)
-        return final
+
+
+
+
+    override fun getFav(): Flow<List<Weather>>? {
+        val data: Flow<List<WeatherEntity>> = db.getFav()!!
+
+        val flow: Flow<List<Weather>> = data.map { list ->
+            list.map { entity ->
+                Weather(
+                    time = entity.time,
+                    weatherCode = entity.weatherCode,
+                    windSpeed = entity.windSpeed,
+                    rain = entity.rain,
+                    snow = entity.snow,
+                    tempMax = entity.tempMax,
+                    tempMin = entity.tempMin,
+                    fav = entity.fav
+                )
+            }
+        }
+
+        return flow
     }
+
 
 
 }

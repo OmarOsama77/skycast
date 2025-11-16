@@ -1,6 +1,5 @@
 package com.example.skycast.view.details.components
 
-import android.telecom.Call
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
 import androidx.compose.runtime.Composable
@@ -8,10 +7,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.example.skycast.R
-import com.example.skycast.models.DailyWeather
+import com.example.skycast.models.Weather
 
 @Composable
-fun DetailsBody(dailyWeather: DailyWeather) {
+fun DetailsBody(dailyWeather: Weather) {
     DetailsItem(painterResource(R.drawable.calendar),"Date","${dailyWeather.time}")
     Spacer(Modifier.height(20.dp))
     DetailsItem(painterResource(R.drawable.temperature),"Temperature","${dailyWeather.temp}°")
