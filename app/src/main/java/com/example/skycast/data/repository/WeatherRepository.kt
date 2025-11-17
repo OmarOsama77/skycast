@@ -5,9 +5,9 @@ import com.example.skycast.models.Weather
 import kotlinx.coroutines.flow.Flow
 
 interface WeatherRepository {
-    suspend fun getData(): List<Weather>?
+    suspend fun getData(today: String): List<Weather>?
     suspend fun getDataFromApi(): List<Weather>?
-    suspend fun insertDataIntoDB(data: List<Weather>)
+    suspend fun insertDataIntoDB(data: List<Weather>,today : String)
     suspend fun updateFav(weather: Weather)
     fun getFav(): Flow<List<Weather>>?
 

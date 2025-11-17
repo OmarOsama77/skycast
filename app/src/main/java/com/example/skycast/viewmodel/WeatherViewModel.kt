@@ -16,6 +16,7 @@ class WeatherViewModel(private val repo: WeatherRepository) : ViewModel() {
 
     var fav: Flow<List<Weather>>? = repo.getFav()
 
+
     init {
         getData()
 
@@ -23,7 +24,7 @@ class WeatherViewModel(private val repo: WeatherRepository) : ViewModel() {
 
      fun getData() {
         viewModelScope.launch {
-            _daily.value = repo.getData()
+            _daily.value = repo.getData(java.time.LocalDate.now().toString())
         }
     }
     fun updateFav(dailyWeather: Weather) {

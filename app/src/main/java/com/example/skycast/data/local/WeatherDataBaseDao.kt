@@ -23,4 +23,7 @@ interface WeatherDataBaseDao {
 
     @Query("Select fav From Weather where time = :time")
     suspend fun getFavStatus(time: String): Boolean
+    @Query("DELETE FROM Weather WHERE time < :today")
+    suspend fun deleteOldData(today: String)
+
 }

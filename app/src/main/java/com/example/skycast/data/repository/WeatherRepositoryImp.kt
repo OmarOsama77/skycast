@@ -22,7 +22,7 @@ class WeatherRepositoryImp(
         var dataComingFromApi = true
     }
 
-    override suspend fun getData(): List<Weather>? {
+    override suspend fun getData(today: String): List<Weather>? {
         try {
             val networkStatus = connectivityObserver.observer().first()
 
@@ -32,7 +32,7 @@ class WeatherRepositoryImp(
                 dataComingFromApi = true
 
                 //caching
-                insertDataIntoDB(dailyWeather)
+                insertDataIntoDB(dailyWeather,today)
                 val data = db.getData()
                 val res: List<Weather> = data.map { entity ->
                     Weather(
@@ -105,7 +105,7 @@ class WeatherRepositoryImp(
         return null
     }
 
-    override suspend fun insertDataIntoDB(data: List<Weather>) {
+    override suspend fun insertDataIntoDB(data: List<Weather>,today:String) {
          //we need to convert to weatherEntity to add to db
 
          val weatherEntities : List<WeatherEntity> = data.map {daily->
@@ -121,7 +121,7 @@ class WeatherRepositoryImp(
              )
          }
         db.insertData(weatherEntities)
-
+       db.deleteOldData(today)
     }
 
     override suspend fun updateFav(weather: Weather) {

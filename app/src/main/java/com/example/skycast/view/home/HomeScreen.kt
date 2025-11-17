@@ -25,6 +25,7 @@ import com.example.skycast.data.repository.WeatherRepositoryImp
 import com.example.skycast.view.components.ItemCard
 import com.example.skycast.view.home.components.HomeHeader
 import com.example.skycast.view.home.components.LoadingIndicator
+import com.example.skycast.view.home.components.NoData
 import com.example.skycast.view.home.components.TodayWeather
 import com.example.skycast.viewmodel.WeatherViewModel
 import com.google.accompanist.swiperefresh.SwipeRefresh
@@ -49,7 +50,11 @@ fun HomeScreen(navController: NavController, viewModel: WeatherViewModel) {
         ){
             if (weather.value == null) {
                 LoadingIndicator()
-            } else {
+            }else if(weather.value!!.isEmpty()) {
+                NoData()
+            }
+            else
+            {
 
                 LazyColumn(
                     modifier = Modifier.fillMaxSize(),
@@ -61,7 +66,7 @@ fun HomeScreen(navController: NavController, viewModel: WeatherViewModel) {
 
                     item { Spacer(Modifier.height(6.dp)) }
                     if(WeatherRepositoryImp.dataComingFromApi){
-                        item { Text("Today and Next 6 days", fontSize = 22.sp, fontWeight = FontWeight.SemiBold) }
+                        item { Text("Data", fontSize = 22.sp, fontWeight = FontWeight.SemiBold) }
                     }else{
                         item { Text("Room data", fontSize = 22.sp, fontWeight = FontWeight.SemiBold) }
                     }
